@@ -1,0 +1,20 @@
+body {
+	text-align: center;
+}
+
+.main {
+	display: grid;
+	grid-template-columns: repeat(3,1fr);
+}
+
+.projects {
+	background-color: whitesmoke;
+}
+
+.to-dos {
+	background-color: grey;
+}
+
+.description {
+	background-color: whitesmoke;
+}
