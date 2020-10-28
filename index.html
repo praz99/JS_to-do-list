@@ -12,13 +12,13 @@
 <div class="container">
 	<h1> To-Do List </h1>
 	<div class="main">
-		<div class="projects" id="project">
+		<div class="project-container" id="project-container">
 			<h3>Project</h3>
-			<div class="">
-			<p>Default project</p>
+			<div class="project-default" id="project-default">
+				<p>Default project</p>
 			</div>
 			
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">ADD PROJECT</button>
+			<button type="button" class="btn btn-primary" id="btn-project-submit" data-toggle="modal" data-target="#projectModalCenter">ADD PROJECT</button>
 			
 		</div>
 		<div class="to-dos" id="toDo">
@@ -33,7 +33,7 @@
 	</div>
 
 <!-- Add project Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="projectModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -43,10 +43,10 @@
         </button>
       </div>
       <div class="modal-body">
-		    <form>
+		    <form id="project-form">
 		  		<div class="form-group">
-		    		<label for="exampleInputEmail1">Title</label>
-		    		<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter the title of your project">
+		    		<label for="inputProjectTItle">Title</label>
+		    		<input type="text" class="form-control" id="inputProjectTitle" aria-describedby="emailHelp" placeholder="Enter the title of your project">
 		  		</div>
 		  		<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
