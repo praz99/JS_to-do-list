@@ -21,9 +21,9 @@
 			<button type="button" class="btn btn-primary" id="btn-project-add" data-toggle="modal" data-target="#projectModalCenter">ADD PROJECT</button>
 			
 		</div>
-		<div class="to-dos" id="toDo">
+		<div class="toDoContainer" id="toDo-container">
 			<h3>Lists</h3>
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ToDoModalCenter">ADD List</button>
+			<button type="button" class="btn btn-primary" id="btn-toDo-add" data-toggle="modal" data-target="#ToDoModalCenter">ADD List</button>
 		</div>
 		<div class="description" id="desc">
 			<h3>Description</h3>
@@ -62,24 +62,24 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add Your Task</h5>
+        <h5 class="modal-title" id="exampleModalTitle">Add Your Task</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-		    <form>
+		    <form id="toDo-form">
 			  <div class="form-group">
-			    <label for="exampleFormControlInput1">Title</label>
-			    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter title...">
+			    <label for="inputToDoTitle">Title</label>
+			    <input type="text" class="form-control" id="inputToDoTitle" placeholder="Enter title...">
 			  </div>
 			  <div class="form-group">
-			    <label for="exampleFormControlInput1">Description</label>
-			    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter description...">
+			    <label for="inputToDoDesc">Description</label>
+			    <input type="text" class="form-control" id="inputToDoDesc" placeholder="Enter description...">
 			  </div>
 			  <div class="form-group">
-			    <label for="exampleFormControlSelect1">Priority</label>
-			    <select class="form-control" id="exampleFormControlSelect1">
+			    <label for="inputToDoPrior">Priority</label>
+			    <select class="form-control" id="inputToDoPrior">
 			      <option>Low</option>
 			      <option>Medium</option>
 			      <option>High</option>
@@ -88,16 +88,16 @@
 				<div class="form-group">
 					<label for="datetime">Due Date</label>
 					<div id="datetime" class="form-control">
-					<input type="date"  name="date">
-					<input type="time" name="timer">	
+					<input type="date"  name="date" id="inputToDODate">
+					<input type="time" name="timer" id="inputToDOTime">	
 					</div>
 					
 				</div>
 			  <div class="form-group">
-			    <label for="exampleFormControlTextarea1">Notes</label>
-			    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+			    <label for="inputToDONote">Notes</label>
+			    <textarea class="form-control" id="inputToDONote" rows="3"></textarea>
 			  </div>
-			  <button type="submit" class="btn btn-primary">Submit</button>
+			  <button type="submit" class="btn btn-primary" id="btn-todo-submit">Submit</button>
 			</form>
       	</div>
 
