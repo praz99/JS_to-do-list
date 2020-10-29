@@ -61,21 +61,49 @@ function addToDo(){
 	const note = document.getElementById('inputToDONote').value;
 
 	const toDo = ToDo(title, desc, prior, date, time, note);
-	lists.push(toDo);
+  lists.push(toDo);
 	displayToDo(toDo);
-  	toDoForm.reset();
-  	$('#ToDoModalCenter').modal('toggle'); return false; 
-}
+  toDoForm.reset();
+  $('#ToDoModalCenter').modal('toggle'); return false;
+};
 
 function displayToDo(todo){
-const toDoSubmitBtn = document.getElementById('btn-toDo-add');
-    const toDoDiv = document.createElement('div');
-    toDoContainer.insertBefore(toDoDiv, toDoSubmitBtn);
+  const toDoSubmitBtn = document.getElementById('btn-toDo-add');
+  const toDoDiv = document.createElement('div');
+  toDoContainer.insertBefore(toDoDiv, toDoSubmitBtn);
 
-    const toDOTitle = document.createElement('p');
-    toDOTitle.innerText = todo.title;
-    toDoDiv.appendChild(toDOTitle);
+  const toDOTitle = document.createElement('p');
+  toDOTitle.innerText = todo.title;
+  toDoDiv.appendChild(toDOTitle);
+  // toDOTitle.addEventListener('click', showDetail(todo));
+  // toDOTitle.addEventListener('click', preventRefresh);
 };
 
 toDoForm.addEventListener('submit', addToDo);
 toDoForm.addEventListener('submit', preventRefresh);
+
+// description
+
+function showDetail(todo) {
+  const detail = document.getElementById('desc');
+  const dTitle = document.createElement('div');
+  const dDesc = document.createElement('div');
+  const dPrior = document.createElement('div');
+  const dDate = document.createElement('div');
+  const dTime = document.createElement('div');
+  const dNote = document.createElement('div');
+
+  dTitle.innerText = todo.title;
+  dDesc.innerText = todo.desc;
+  dPrior.innerText = todo.prior;
+  dDate.innerText = todo.date;
+  dTime.innerText = todo.time;
+  dNote.innerText = todo.note;
+
+  detail.appendChild(dTitle);
+  detail.appendChild(dDesc);
+  detail.appendChild(dPrior);
+  detail.appendChild(dDate);
+  detail.appendChild(dTime);
+  detail.appendChild(dNote);
+}
