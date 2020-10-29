@@ -75,8 +75,8 @@ function displayToDo(todo){
   const toDOTitle = document.createElement('p');
   toDOTitle.innerText = todo.title;
   toDoDiv.appendChild(toDOTitle);
-  // toDOTitle.addEventListener('click', showDetail(todo));
-  // toDOTitle.addEventListener('click', preventRefresh);
+  toDOTitle.addEventListener('click', showDetail(todo));
+  toDOTitle.addEventListener('click', preventRefresh);
 };
 
 toDoForm.addEventListener('submit', addToDo);
