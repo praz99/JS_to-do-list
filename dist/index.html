@@ -23,11 +23,18 @@
 		<h2 class="project-title" data-project-title></h2>
 
 		<div class="todo-body">
-			<div class="todos" data-todos></div>
+			<div class="todos" data-todos>
+				
+			</div>
 		</div>
 	</div>
+	<button class="btn-delete" data-delete-todo-button>Delete To-Do</button>
 
 	<button type="button" class="btn btn-primary" id="btn-toDo-add" data-toggle="modal" data-target="#ToDoModalCenter">ADD TASK</button>
+
+	<div class="todo-desc" data-todo-desc>
+		<div class="desc" data-desc></div>
+	</div>
 
 <!-- Add project Modal -->
 <div class="modal fade" id="projectModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -103,9 +110,10 @@
 
 <template id="todo-template">
 	<div class="todo">
-		<label>
-			<span class="custom-checkbox"></span>
-		</label>
+		<ul>
+
+			<!-- <span class="custom-checkbox"></span> -->
+		</ul>
 	</div>
 </template>
 

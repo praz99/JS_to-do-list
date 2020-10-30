@@ -2,6 +2,7 @@ const projectsContainer = document.querySelector('[data-projects]');
 const newProjectForm = document.querySelector('[data-new-project-form]');
 const newProjectInput = document.querySelector('[data-new-project-input]');
 const deleteProjectButton = document.querySelector('[data-delete-project-button]');
+const deleteToDoButton = document.querySelector('[data-delete-todo-button]');
 
 const projectDisplayContainer = document.querySelector('[data-project-dsplay-container]');
 const projectTitleElement = document.querySelector('[data-project-title]');
@@ -17,11 +18,29 @@ const newTodoInputDate = document.querySelector('[data-new-todo-date-input]');
 const newTodoInputTime = document.querySelector('[data-new-todo-time-input]');
 const newTodoInputNote = document.querySelector('[data-new-todo-note-input]');
 
+const todoDescriptionContainer = document.querySelector('[data-todo-desc]');
+const todoDescription = document.querySelector('[data-desc]');
+
 const LOCAL_STORAGE_PROJECT_KEY = 'todos.projects';
 const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'todos.selectedProjectId';
 
 let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_KEY)) || [];
 let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY)
+
+
+todosContainer.addEventListener('click', e => {
+	if (e.target.tagName.toLowerCase() === 'ul') {
+	 const selectedProject = projects.find(list => list.id === selectedProjectId)
+    const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id)
+    renderTodosDesc(selectedToDo);
+	}
+});
+
+deleteToDoButton.addEventListener('click', e => {
+  const selectedProject = projects.find(list => list.id === selectedProjectId)
+  selectedProject.todos = selectedProject.todos.filter(todo => todo.id == selectedProject.todos.id);
+  saveAndRender();
+});
 
 projectsContainer.addEventListener('click', e => {
   if(e.target.tagName.toLowerCase() === 'li') {
@@ -49,13 +68,22 @@ newProjectForm.addEventListener('submit', e => {
 newTodoForm.addEventListener('submit', e => {
   e.preventDefault();
   const todoName = newTodoInputTitle.value;
+  const todoDesc = newTodoInputDesc.value;
+  const todoPrior = newTodoInputPrior.value;
+  const todoDate = newTodoInputDate.value;
+  const todoTime = newTodoInputTime.value;
+  const todoNote = newTodoInputNote.value;
+
   if(todoName == null || todoName === '') return
-  const todo = createTodo(todoName);
+  const todo = createTodo(todoName,todoDesc,todoPrior,todoDate,todoTime,todoNote);
   newTodoInputTitle.value = null;
   const selectedProject = projects.find(project => project.id === selectedProjectId);
   selectedProject.todos.push(todo);
   saveAndRender();
+  newTodoForm.reset();
 });
+
+
 
 function createProject(name) {
   return {
@@ -106,11 +134,22 @@ function render() {
 function renderTodos(selectedProject) {
   selectedProject.todos.forEach(todo => {
     const todoElement = document.importNode(todoTemplate.content, true);
-    const label = todoElement.querySelector('label');
-    label.htmlFor = todo.id;
+    const label = todoElement.querySelector('ul');
+    label.id = todo.id;
     label.append(todo.name);
     todosContainer.appendChild(todoElement);
   })
+}
+
+function renderTodosDesc(selectedToDo) {
+	clearElement(todoDescription);
+    todoDescription.append(selectedToDo.name);
+    todoDescription.append(selectedToDo.desc); 
+    todoDescription.append(selectedToDo.prior);
+    todoDescription.append(selectedToDo.date);
+    todoDescription.append(selectedToDo.time);
+    todoDescription.append(selectedToDo.note);
+    todoDescriptionContainer.appendChild(todoDescription);
 }
 
 function renderProjects() {
