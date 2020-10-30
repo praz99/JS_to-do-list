@@ -1,28 +1,129 @@
-import './css/style.css';
-import domController from './dom/domcontroller.js';
+const projectsContainer = document.querySelector('[data-projects]');
+const newProjectForm = document.querySelector('[data-new-project-form]');
+const newProjectInput = document.querySelector('[data-new-project-input]');
+const deleteProjectButton = document.querySelector('[data-delete-project-button]');
 
-// autofocus modal input
-$('#projectModalCenter').on('shown.bs.modal', function () {
-  $('#inputProjectTitle').focus()
-})
-$('#ToDoModalCenter').on('shown.bs.modal', function () {
-  $('#inputToDoTitle').focus()
-})
+const projectDisplayContainer = document.querySelector('[data-project-dsplay-container]');
+const projectTitleElement = document.querySelector('[data-project-title]');
+const todosContainer = document.querySelector('[data-todos]');
 
+const todoTemplate = document.getElementById('todo-template');
 
-// const preventRefresh = (event) => {
-//   event.preventDefault(); 
-// };
+const newTodoForm = document.querySelector('[data-new-todo-form]');
+const newTodoInputTitle = document.querySelector('[data-new-todo-title-input]');
 
-const projectForm = document.getElementById('project-form');
-projectForm.addEventListener('submit', domController.domProjects);
+const LOCAL_STORAGE_PROJECT_KEY = 'todos.projects';
+const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'todos.selectedProjectId';
 
-const toDoForm = document.getElementById('toDo-form');
-toDoForm.addEventListener('submit', domController.domToDos);
+let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_KEY)) || [];
+let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY)
 
+projectsContainer.addEventListener('click', e => {
+  if(e.target.tagName.toLowerCase() === 'li') {
+    selectedProjectId = e.target.dataset.projectId
+    saveAndRender()
+  }
+});
 
-// projectForm.addEventListener('submit', preventRefresh);
+deleteProjectButton.addEventListener('click', e => {
+  projects = projects.filter(project => project.id !== selectedProjectId);
+  selectedProjectId = null;
+  saveAndRender();
+});
 
+newProjectForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const projectName = newProjectInput.value;
+  if(projectName == null || projectName === '') return
+  const project = createProject(projectName);
+  newProjectInput.value = null;
+  projects.push(project);
+  saveAndRender()
+});
+
+newTodoForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const todoName = newTodoInputTitle.value;
+  if(todoName == null || todoName === '') return
+  const todo = createTodo(todoName);
+  newTodoInputTitle.value = null;
+  const selectedProject = projects.find(project => project.id === selectedProjectId);
+  selectedProject.todos.push(todo);
+  saveAndRender();
+});
+
+function createProject(name) {
+  return {
+    id: Date.now().toString(),
+    name: name,
+    todos: []
+  }
+}
+
+function createTodo(name) {
+  return {
+    id: Date.now().toString(),
+    name: name
+  }
+}
+
+function saveAndRender() {
+  save()
+  render()
+}
+
+function save() {
+  localStorage.setItem(LOCAL_STORAGE_PROJECT_KEY, JSON.stringify(projects))
+  localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY, selectedProjectId)
+}
+
+function render() {
+  clearElement(projectsContainer);
+  renderProjects();
+
+  const selectedProject = projects.find(project => project.id === selectedProjectId);
+
+  if(selectedProjectId == null) {
+    projectDisplayContainer.style.display = 'none';
+  } else {
+    projectDisplayContainer.style.display = '';
+    projectTitleElement.innerText = selectedProject.name;
+    clearElement(todosContainer);
+    renderTodos(selectedProject);
+  }
+}
+
+function renderTodos(selectedProject) {
+  selectedProject.todos.forEach(todo => {
+    const todoElement = document.importNode(todoTemplate.content, true);
+    const label = todoElement.querySelector('label');
+    label.htmlFor = todo.id;
+    label.append(todo.name);
+    todosContainer.appendChild(todoElement);
+  })
+}
+
+function renderProjects() {
+  projects.forEach(project => {
+    const projectElement = document.createElement('li');
+    projectElement.dataset.projectId = project.id;
+    projectElement.classList.add("project-name");
+    projectElement.innerText = project.name;
+    if(project.id === selectedProjectId) {
+      projectElement.classList.add('active-project')
+    }
+    projectsContainer.appendChild(projectElement);
+  })
+}
+function clearElement(element) {
+  while(element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+render();
+
+// import './css/style.css';
 // const projectForm = document.getElementById('project-form');
 // const projectContainer = document.getElementById('project-container');
 // const projects = [];
@@ -30,6 +131,11 @@ toDoForm.addEventListener('submit', domController.domToDos);
 // const Project = (title) => {
 //   return { title }
 // };
+
+// // autofocus modal input
+// $('#projectModalCenter').on('shown.bs.modal', function () {
+//   $('#inputProjectTitle').focus()
+// })
 
 // function addProject() {
 //   const title = document.getElementById('inputProjectTitle').value;
@@ -63,7 +169,9 @@ toDoForm.addEventListener('submit', domController.domToDos);
 // const toDoContainer = document.getElementById('toDo-container');
 // const lists = [];
 
-
+// $('#ToDoModalCenter').on('shown.bs.modal', function () {
+//   $('#inputToDoTitle').focus()
+// })
 
 // const ToDo = (title, desc, prior, date, time, note) => {
 // 	return {title, desc, prior, date, time, note}
@@ -92,8 +200,8 @@ toDoForm.addEventListener('submit', domController.domToDos);
 //   const toDOTitle = document.createElement('p');
 //   toDOTitle.innerText = todo.title;
 //   toDoDiv.appendChild(toDOTitle);
-//   toDOTitle.addEventListener('click', showDetail(todo));
-//   toDOTitle.addEventListener('click', preventRefresh);
+//   // toDOTitle.addEventListener('click', showDetail(todo));
+//   // toDOTitle.addEventListener('click', preventRefresh);
 // };
 
 // toDoForm.addEventListener('submit', addToDo);

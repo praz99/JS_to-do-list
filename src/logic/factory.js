@@ -1,14 +1,14 @@
-const Factory = (() => {
-	const projectFactory = (title) => {
-		let toDos = [];
-		return {title, toDos};
-	}
+// const Factory = (() => {
+// 	const projectFactory = (title) => {
+// 		let toDos = [];
+// 		return {title, toDos};
+// 	}
 
-	const toDoFactory = (title, desc, prior, date, time, note) => {
-		return {title, desc, prior, date, time, note};
-	}
+// 	const toDoFactory = (title, desc, prior, date, time, note) => {
+// 		return {title, desc, prior, date, time, note};
+// 	}
 
-	return { projectFactory, toDoFactory};
-})();
+// 	return { projectFactory, toDoFactory};
+// })();
 
-export default Factory;
+// export default Factory;
