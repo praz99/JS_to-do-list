@@ -11,6 +11,11 @@ const todoTemplate = document.getElementById('todo-template');
 
 const newTodoForm = document.querySelector('[data-new-todo-form]');
 const newTodoInputTitle = document.querySelector('[data-new-todo-title-input]');
+const newTodoInputDesc = document.querySelector('[data-new-todo-desc-input]');
+const newTodoInputPrior = document.querySelector('[data-new-todo-prior-input]');
+const newTodoInputDate = document.querySelector('[data-new-todo-date-input]');
+const newTodoInputTime = document.querySelector('[data-new-todo-time-input]');
+const newTodoInputNote = document.querySelector('[data-new-todo-note-input]');
 
 const LOCAL_STORAGE_PROJECT_KEY = 'todos.projects';
 const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'todos.selectedProjectId';
@@ -60,10 +65,15 @@ function createProject(name) {
   }
 }
 
-function createTodo(name) {
+function createTodo(name, desc, prior, date, time, note) {
   return {
     id: Date.now().toString(),
-    name: name
+    name: name,
+    desc: desc,
+    prior: prior,
+    date: date,
+    time: time,
+    note: note
   }
 }
 

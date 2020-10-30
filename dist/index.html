@@ -20,7 +20,7 @@
 
 	<!-- display the to-dos -->
 	<div class="to-do-list" data-project-dsplay-container>
-		<h2 class="todo-title" data-project-title></h2>
+		<h2 class="project-title" data-project-title></h2>
 
 		<div class="todo-body">
 			<div class="todos" data-todos></div>
@@ -70,13 +70,13 @@
 						<label for="inputToDoTitle">Title</label>
 						<input type="text" class="form-control" id="inputToDoTitle" placeholder="Enter title..." data-new-todo-title-input>
 					</div>
-					<!-- <div class="form-group">
+					<div class="form-group">
 						<label for="inputToDoDesc">Description</label>
-						<input type="text" class="form-control" id="inputToDoDesc" placeholder="Enter description...">
+						<input type="text" class="form-control" id="inputToDoDesc" placeholder="Enter description..."data-new-todo-desc-input>
 					</div>
 					<div class="form-group">
 						<label for="inputToDoPrior">Priority</label>
-						<select class="form-control" id="inputToDoPrior">
+						<select class="form-control" id="inputToDoPrior" data-new-todo-prior-input>
 							<option>Low</option>
 							<option>Medium</option>
 							<option>High</option>
@@ -85,15 +85,15 @@
 					<div class="form-group">
 						<label for="datetime">Due Date</label>
 						<div id="datetime" class="form-control">
-						<input type="date"  name="date" id="inputToDODate">
-						<input type="time" name="timer" id="inputToDOTime">	
+						<input type="date"  name="date" id="inputToDODate" data-new-todo-date-input>
+						<input type="time" name="time" id="inputToDOTime" data-new-todo-time-input>	
 						</div>
 						
 					</div>
 					<div class="form-group">
 						<label for="inputToDONote">Notes</label>
-						<textarea class="form-control" id="inputToDONote" rows="3"></textarea>
-					</div> -->
+						<textarea class="form-control" id="inputToDONote" rows="3"data-new-todo-note-input></textarea>
+					</div>
 					<button type="submit" class="btn btn-primary" id="btn-todo-submit">Submit</button>
 				</form>
       </div>
