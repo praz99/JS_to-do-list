@@ -29,16 +29,22 @@ let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_K
 
 
 todosContainer.addEventListener('click', e => {
+	if(e.target.tagName.toLowerCase() === 'input'){
+		const selectedProject = projects.find(list => list.id === selectedProjectId)
+    const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id);
+     selectedToDo.complete = e.target.checked;
+    save();
+	}
 	if (e.target.tagName.toLowerCase() === 'ul') {
 	 const selectedProject = projects.find(list => list.id === selectedProjectId)
-    const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id)
-    renderTodosDesc(selectedToDo);
+     const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id)
+     renderTodosDesc(selectedToDo);
 	}
 });
 
 deleteToDoButton.addEventListener('click', e => {
   const selectedProject = projects.find(list => list.id === selectedProjectId)
-  selectedProject.todos = selectedProject.todos.filter(todo => todo.id == selectedProject.todos.id);
+  selectedProject.todos = selectedProject.todos.filter(todo => !todo.complete)
   saveAndRender();
 });
 
@@ -101,7 +107,8 @@ function createTodo(name, desc, prior, date, time, note) {
     prior: prior,
     date: date,
     time: time,
-    note: note
+    note: note,
+    complete: false
   }
 }
 
@@ -134,6 +141,9 @@ function render() {
 function renderTodos(selectedProject) {
   selectedProject.todos.forEach(todo => {
     const todoElement = document.importNode(todoTemplate.content, true);
+    const checkbox = todoElement.querySelector('input');
+    checkbox.id = todo.id;
+    checkbox.checked = todo.complete;
     const label = todoElement.querySelector('ul');
     label.id = todo.id;
     label.append(todo.name);
@@ -164,6 +174,7 @@ function renderProjects() {
     projectsContainer.appendChild(projectElement);
   })
 }
+
 function clearElement(element) {
   while(element.firstChild) {
     element.removeChild(element.firstChild);
