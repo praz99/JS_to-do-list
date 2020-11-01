@@ -154,13 +154,32 @@ function renderTodos(selectedProject) {
 }
 
 function renderTodosDesc(selectedToDo) {
-	clearElement(todoDescription);
-  todoDescription.append(selectedToDo.name);
-  todoDescription.append(selectedToDo.desc); 
-  todoDescription.append(selectedToDo.prior);
-  todoDescription.append(selectedToDo.date);
-  todoDescription.append(selectedToDo.time);
-  todoDescription.append(selectedToDo.note);
+  clearElement(todoDescription);
+
+  const todoDescTitle = document.createElement('div');
+  todoDescTitle.innerText = `Title: ${selectedToDo.name}`;
+  todoDescription.appendChild(todoDescTitle);
+
+  const todoDescDescription = document.createElement('div');
+  todoDescDescription.innerText = `Description: ${selectedToDo.desc}`;
+  todoDescription.appendChild(todoDescDescription);
+
+  const todoDescPriority = document.createElement('div');
+  todoDescPriority.innerText = `Priority: ${selectedToDo.prior}`;
+  todoDescription.appendChild(todoDescPriority);
+
+  const todoDescDate = document.createElement('div');
+  todoDescDate.innerText = `Date: ${selectedToDo.date}`;
+  todoDescription.appendChild(todoDescDate);
+
+  const todoDescTime = document.createElement('div');
+  todoDescTime.innerText = `Time: ${selectedToDo.time}`;
+  todoDescription.appendChild(todoDescTime);
+
+  const todoDescNote = document.createElement('div');
+  todoDescNote.innerText = `Note: ${selectedToDo.note}`;
+  todoDescription.appendChild(todoDescNote);
+
   todoDescriptionContainer.insertBefore(todoDescription, deleteToDoButton);
 }
 
