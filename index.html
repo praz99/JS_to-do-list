@@ -9,7 +9,7 @@
   <title>To Do List</title>
 </head>
 <body>
-	<div class="main-container d-flex border border-success">
+	<div class="main-container d-flex">
 		<!-- Display the projects -->
 		<div class="all-projects">
 			<h2 class="project-list-title">Projects</h2>
@@ -23,8 +23,8 @@
 			<div class="todo-body">
 				<div class="todos" data-todos></div>
 			</div>
-			<button type="button" class="btn btn-primary" id="btn-toDo-add" data-toggle="modal" data-target="#ToDoModalCenter">ADD TASK</button>
-			<button class="btn btn-danger w-100" data-delete-project-button>Delete Project</button>
+			<button type="button" class="btn btn-secondary w-100 mb-1 rounded-0" id="btn-toDo-add" data-toggle="modal" data-target="#ToDoModalCenter">ADD TASK</button>
+			<button class="btn btn-danger w-100 rounded-0" data-delete-project-button>Delete This Project</button>
 		</div>
 		<div class="todo-desc" data-todo-desc>
 			<div class="desc" data-desc></div>
@@ -105,12 +105,9 @@
 	</div>
 
 	<template id="todo-template">
-		<div class="todo">
-			<input type="checkbox" />
-			<label>
-				<span class="custom-checkbox"></span>
-			</label>
-			<ul></ul>
+		<div class="todo-list-container d-flex">
+			<input type="checkbox" class="todo-list-checkbox" />
+			<ul class="todo-list-show"></ul>
 		</div>
 	</template>
 
