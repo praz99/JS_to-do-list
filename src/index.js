@@ -155,13 +155,13 @@ function renderTodos(selectedProject) {
 
 function renderTodosDesc(selectedToDo) {
 	clearElement(todoDescription);
-    todoDescription.append(selectedToDo.name);
-    todoDescription.append(selectedToDo.desc); 
-    todoDescription.append(selectedToDo.prior);
-    todoDescription.append(selectedToDo.date);
-    todoDescription.append(selectedToDo.time);
-    todoDescription.append(selectedToDo.note);
-    todoDescriptionContainer.appendChild(todoDescription);
+  todoDescription.append(selectedToDo.name);
+  todoDescription.append(selectedToDo.desc); 
+  todoDescription.append(selectedToDo.prior);
+  todoDescription.append(selectedToDo.date);
+  todoDescription.append(selectedToDo.time);
+  todoDescription.append(selectedToDo.note);
+  todoDescriptionContainer.insertBefore(todoDescription, deleteToDoButton);
 }
 
 function renderProjects() {

@@ -5,6 +5,8 @@
 body {
 	margin: 0;
 	padding: 0;
+	background: lightgrey;
+	padding: 4em 2em;
 }
 
 h2 {
@@ -25,7 +27,7 @@ h2 {
 
 .project-list {
 	list-style-type: none;
-	padding: 0;
+	padding: 0 3px;
 	margin: 0;
 }
 
@@ -38,6 +40,35 @@ h2 {
 	cursor: pointer;
 }
 
-.project-list li:hover {
+.project-list li:hover,
+.todo-list-show:hover {
 	background: rgb(216 216 49 / 70%);
+}
+
+.todo-list-container {
+	border: 1px solid black;
+	background: rgb(54 184 226);
+	margin: 3px 0;
+	position: relative;
+}
+
+.to-do-list {
+	background: rgb(86 158 181);
+	width: calc(1/3 * 100%);
+	padding: 0 3px;
+}
+
+.todo-list-show {
+	width: 100%;
+	padding: 0.5em 0.5em 0.5em 1.5em;
+	overflow: hidden;
+	white-space: nowrap;
+	cursor: pointer;
+	margin: 0;
+}
+
+.todo-list-checkbox {
+	position: absolute;
+	top: 13px;
+	left: 3px;
 }
