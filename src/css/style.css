@@ -42,6 +42,10 @@ h2 {
 	cursor: pointer;
 }
 
+.project-list li.active-project {
+	background: rgb(216 216 49 / 70%);
+}
+
 .project-list li:hover,
 .todo-list-show:hover {
 	background: rgb(216 216 49 / 70%);
@@ -51,7 +55,7 @@ h2 {
 
 .todo-list-container {
 	border: 1px solid black;
-	background: rgb(54 184 226);
+	/* background: rgb(54 184 226); */
 	margin: 3px 0;
 	position: relative;
 }

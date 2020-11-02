@@ -23,14 +23,14 @@
 			<div class="todo-body">
 				<div class="todos" data-todos></div>
 			</div>
-			<button type="button" class="btn btn-secondary w-100 mb-1 rounded-0" id="btn-toDo-add" data-toggle="modal" data-target="#ToDoModalCenter">ADD TASK</button>
+			<button type="button" class="btn btn-secondary w-100 mb-1 mt-4 rounded-0" id="btn-toDo-add" data-toggle="modal" data-target="#ToDoModalCenter">ADD TASK</button>
+			<button class="btn-delete btn btn-danger w-100 rounded-0 mb-1" data-delete-todo-button>Delete Completed Tasks</button>
 			<button class="btn btn-danger w-100 rounded-0" data-delete-project-button>Delete This Project</button>
 		</div>
 		<!-- display to-do details-->
 		<div class="todo-desc" data-todo-desc>
 			<h2>details</h2>
 			<div class="desc" data-desc></div>
-			<button class="btn-delete btn btn-danger w-100 rounded-0" data-delete-todo-button>Delete To-Do</button>
 		</div>
 	</div>	
 
@@ -107,10 +107,10 @@
 	</div>
 
 	<template id="todo-template">
-		<div class="todo-list-container d-flex">
+		<div class="todo-list-container d-flex" id="todo-list-container">
 			<input type="checkbox" class="todo-list-checkbox" />
 			<ul class="todo-list-show"></ul>
-			<button type="button" class="btn btn-warning" id="btn-toDo-edit" data-toggle="modal" data-target="#ToDoModalCenter">Edit</button>
+			<button type="button" class="btn btn-warning rounded-0" id="btn-toDo-edit" data-toggle="modal" data-target="#ToDoModalCenter">Edit</button>
 		</div>
 	</template>
 

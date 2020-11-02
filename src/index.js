@@ -44,8 +44,9 @@ todosContainer.addEventListener('click', e => {
   }
 	if (e.target.tagName.toLowerCase() === 'ul') {
 	 const selectedProject = projects.find(list => list.id === selectedProjectId)
-     const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id)
-     renderTodosDesc(selectedToDo);
+    const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id)
+    
+    renderTodosDesc(selectedToDo);
 	}
 });
 
@@ -163,6 +164,14 @@ function renderTodos(selectedProject) {
   selectedProject.todos.forEach(todo => {
     const todoElement = document.importNode(todoTemplate.content, true);
     const checkbox = todoElement.querySelector('input');
+    const todoListContainer = todoElement.getElementById('todo-list-container');
+    if(todo.prior.toLowerCase() === 'low') {
+      todoListContainer.style.backgroundColor = '#6ed46e';
+    } else if(todo.prior.toLowerCase() === 'medium') {
+      todoListContainer.style.backgroundColor = '#c3825d';
+    } else {
+      todoListContainer.style.backgroundColor = '#d45c5c';
+    } 
     checkbox.id = todo.id;
     checkbox.checked = todo.complete;
     const editButton = todoElement.querySelector('button');
@@ -209,7 +218,6 @@ function renderProjects() {
   projects.forEach(project => {
     const projectElement = document.createElement('li');
     projectElement.dataset.projectId = project.id;
-    projectElement.classList.add("project-name");
     projectElement.innerText = project.name;
     if(project.id === selectedProjectId) {
       projectElement.classList.add('active-project')
