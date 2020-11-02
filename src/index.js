@@ -27,121 +27,54 @@ const LOCAL_STORAGE_PROJECT_KEY = 'todos.projects';
 const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'todos.selectedProjectId';
 
 let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_KEY)) || [];
-let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY)
+let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY);
 
-
-todosContainer.addEventListener('click', e => {
-	if(e.target.tagName.toLowerCase() === 'input'){
-		const selectedProject = projects.find(list => list.id === selectedProjectId)
-    const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id);
-     selectedToDo.complete = e.target.checked;
-    save();
-	}
-  if (e.target.tagName.toLowerCase() === 'button') {
-   const selectedProject = projects.find(list => list.id === selectedProjectId)
-     const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id)
-     editToDoForm(selectedToDo);
-  }
-	if (e.target.tagName.toLowerCase() === 'ul') {
-	 const selectedProject = projects.find(list => list.id === selectedProjectId)
-    const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id)
-    
-    renderTodosDesc(selectedToDo);
-	}
-});
-
-deleteToDoButton.addEventListener('click', e => {
-  const selectedProject = projects.find(list => list.id === selectedProjectId)
-  selectedProject.todos = selectedProject.todos.filter(todo => !todo.complete)
-  saveAndRender();
-});
-
-projectsContainer.addEventListener('click', e => {
-  if(e.target.tagName.toLowerCase() === 'li') {
-    selectedProjectId = e.target.dataset.projectId
-    saveAndRender()
-  }
-});
-
-deleteProjectButton.addEventListener('click', e => {
-  projects = projects.filter(project => project.id !== selectedProjectId);
-  selectedProjectId = null;
-  saveAndRender();
-});
-
-newProjectForm.addEventListener('submit', e => {
-  e.preventDefault();
-  const projectName = newProjectInput.value;
-  if(projectName == null || projectName === '') return
-  const project = createProject(projectName);
-  newProjectInput.value = null;
-  projects.push(project);
-  saveAndRender()
-});
-
-newTodoForm.addEventListener('submit', e => {
-  e.preventDefault();
-  const todoName = newTodoInputTitle.value;
-  const todoDesc = newTodoInputDesc.value;
-  const todoPrior = newTodoInputPrior.value;
-  const todoDate = newTodoInputDate.value;
-  const todoTime = newTodoInputTime.value;
-  const todoNote = newTodoInputNote.value;
-
-  if(todoName == null || todoName === '') return
-  const todo = createTodo(todoName,todoDesc,todoPrior,todoDate,todoTime,todoNote);
-  newTodoInputTitle.value = null;
-  const selectedProject = projects.find(project => project.id === selectedProjectId);
-  selectedProject.todos.push(todo);
-  saveAndRender();
-  newTodoForm.reset();
-});
-
-function editToDoForm(todo){
-
-  newTodoForm.addEventListener('submit', e => {
-  e.preventDefault();
-  if (todo.name) todo.name = newTodoInputTitle.value;
-  if (todo.desc) todo.desc = newTodoInputDesc.value;
-  if (todo.prior) todo.prior = newTodoInputPrior.value;
-  if (todo.date) todo.date = newTodoInputDate.value;
-  if (todo.time) todo.time = newTodoInputTime.value;
-  if (todo.note) todo.note = newTodoInputNote.value;
-  saveAndRender();
-  newTodoForm.reset();
-});
-}
-
-function createProject(name) {
-  return {
-    id: Date.now().toString(),
-    name: name,
-    todos: []
+function clearElement(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
   }
 }
 
-function createTodo(name, desc, prior, date, time, note) {
-  return {
-    id: Date.now().toString(),
-    name: name,
-    desc: desc,
-    prior: prior,
-    date: date,
-    time: time,
-    note: note,
-    complete: false
-  }
-}
-
-function saveAndRender() {
-  save()
-  render()
+function renderProjects() {
+  projects.forEach(project => {
+    const projectElement = document.createElement('li');
+    projectElement.dataset.projectId = project.id;
+    projectElement.innerText = project.name;
+    if (project.id === selectedProjectId) {
+      projectElement.classList.add('active-project');
+    }
+    projectsContainer.appendChild(projectElement);
+  });
 }
 
 function save() {
-  localStorage.setItem(LOCAL_STORAGE_PROJECT_KEY, JSON.stringify(projects))
-  localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY, selectedProjectId)
+  localStorage.setItem(LOCAL_STORAGE_PROJECT_KEY, JSON.stringify(projects));
+  localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY, selectedProjectId);
 }
+
+function renderTodos(selectedProject) {
+  selectedProject.todos.forEach(todo => {
+    const todoElement = document.importNode(todoTemplate.content, true);
+    const checkbox = todoElement.querySelector('input');
+    const todoListContainer = todoElement.getElementById('todo-list-container');
+    if (todo.prior.toLowerCase() === 'low') {
+      todoListContainer.style.backgroundColor = '#6ed46e';
+    } else if (todo.prior.toLowerCase() === 'medium') {
+      todoListContainer.style.backgroundColor = '#c3825d';
+    } else {
+      todoListContainer.style.backgroundColor = '#d45c5c';
+    }
+    checkbox.id = todo.id;
+    checkbox.checked = todo.complete;
+    const editButton = todoElement.querySelector('button');
+    editButton.id = todo.id;
+    const label = todoElement.querySelector('ul');
+    label.id = todo.id;
+    label.append(todo.name);
+    if (todo.name !== '') todosContainer.appendChild(todoElement);
+  });
+}
+
 
 function render() {
   clearElement(projectsContainer);
@@ -149,7 +82,7 @@ function render() {
 
   const selectedProject = projects.find(project => project.id === selectedProjectId);
 
-  if(selectedProjectId == null) {
+  if (selectedProjectId == null) {
     projectDisplayContainer.style.display = 'none';
   } else {
     projectDisplayContainer.style.display = '';
@@ -160,28 +93,9 @@ function render() {
   }
 }
 
-function renderTodos(selectedProject) {
-  selectedProject.todos.forEach(todo => {
-    const todoElement = document.importNode(todoTemplate.content, true);
-    const checkbox = todoElement.querySelector('input');
-    const todoListContainer = todoElement.getElementById('todo-list-container');
-    if(todo.prior.toLowerCase() === 'low') {
-      todoListContainer.style.backgroundColor = '#6ed46e';
-    } else if(todo.prior.toLowerCase() === 'medium') {
-      todoListContainer.style.backgroundColor = '#c3825d';
-    } else {
-      todoListContainer.style.backgroundColor = '#d45c5c';
-    } 
-    checkbox.id = todo.id;
-    checkbox.checked = todo.complete;
-    const editButton = todoElement.querySelector('button');
-    editButton.id = todo.id;
-    const label = todoElement.querySelector('ul');
-    label.id = todo.id;
-    label.append(todo.name);
-    if(todo.name !== '')
-      todosContainer.appendChild(todoElement);
-  })
+function saveAndRender() {
+  save();
+  render();
 }
 
 function renderTodosDesc(selectedToDo) {
@@ -211,25 +125,104 @@ function renderTodosDesc(selectedToDo) {
   todoDescNote.innerText = `Note: ${selectedToDo.note}`;
   todoDescription.appendChild(todoDescNote);
 
-  todoDescriptionContainer.insertBefore(todoDescription, deleteToDoButton);
+  todoDescriptionContainer.appendChild(todoDescription);
 }
 
-function renderProjects() {
-  projects.forEach(project => {
-    const projectElement = document.createElement('li');
-    projectElement.dataset.projectId = project.id;
-    projectElement.innerText = project.name;
-    if(project.id === selectedProjectId) {
-      projectElement.classList.add('active-project')
-    }
-    projectsContainer.appendChild(projectElement);
-  })
+function editToDoForm(todo) {
+  newTodoForm.addEventListener('submit', e => {
+    e.preventDefault();
+    if (todo.name) todo.name = newTodoInputTitle.value;
+    if (todo.desc) todo.desc = newTodoInputDesc.value;
+    if (todo.prior) todo.prior = newTodoInputPrior.value;
+    if (todo.date) todo.date = newTodoInputDate.value;
+    if (todo.time) todo.time = newTodoInputTime.value;
+    if (todo.note) todo.note = newTodoInputNote.value;
+    saveAndRender();
+    newTodoForm.reset();
+  });
 }
 
-function clearElement(element) {
-  while(element.firstChild) {
-    element.removeChild(element.firstChild);
+function createProject(name) {
+  return {
+    id: Date.now().toString(),
+    name,
+    todos: [],
+  };
+}
+
+function createTodo(name, desc, prior, date, time, note) {
+  return {
+    id: Date.now().toString(),
+    name,
+    desc,
+    prior,
+    date,
+    time,
+    note,
+    complete: false,
+  };
+}
+
+todosContainer.addEventListener('click', e => {
+  const selectedProject = projects.find(list => list.id === selectedProjectId);
+  const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id);
+  if (e.target.tagName.toLowerCase() === 'input') {
+    selectedToDo.complete = e.target.checked;
+    save();
   }
-}
+  if (e.target.tagName.toLowerCase() === 'button') {
+    editToDoForm(selectedToDo);
+  }
+  if (e.target.tagName.toLowerCase() === 'ul') {
+    renderTodosDesc(selectedToDo);
+  }
+});
+
+deleteToDoButton.addEventListener('click', () => {
+  const selectedProject = projects.find(list => list.id === selectedProjectId);
+  selectedProject.todos = selectedProject.todos.filter(todo => !todo.complete);
+  saveAndRender();
+});
+
+projectsContainer.addEventListener('click', e => {
+  if (e.target.tagName.toLowerCase() === 'li') {
+    selectedProjectId = e.target.dataset.projectId;
+    saveAndRender();
+  }
+});
+
+deleteProjectButton.addEventListener('click', () => {
+  projects = projects.filter(project => project.id !== selectedProjectId);
+  selectedProjectId = null;
+  saveAndRender();
+});
+
+newProjectForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const projectName = newProjectInput.value;
+  if (projectName == null || projectName === '') return;
+  const project = createProject(projectName);
+  newProjectInput.value = null;
+  projects.push(project);
+  saveAndRender();
+});
+
+newTodoForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const todoName = newTodoInputTitle.value;
+  const todoDesc = newTodoInputDesc.value;
+  const todoPrior = newTodoInputPrior.value;
+  const todoDate = newTodoInputDate.value;
+  const todoTime = newTodoInputTime.value;
+  const todoNote = newTodoInputNote.value;
+
+  if (todoName == null || todoName === '') return;
+  const todo = createTodo(todoName, todoDesc, todoPrior, todoDate, todoTime, todoNote);
+  newTodoInputTitle.value = null;
+  const selectedProject = projects.find(project => project.id === selectedProjectId);
+  selectedProject.todos.push(todo);
+  saveAndRender();
+  newTodoForm.reset();
+});
 
 render();

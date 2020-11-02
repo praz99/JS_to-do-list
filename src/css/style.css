@@ -1,100 +1,102 @@
-*, *::before, *::after {
-	box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
-	margin: 0;
-	padding: 0;
-	background: lightgrey;
-	padding: 4em 2em;
+  margin: 0;
+  background: lightgrey;
+  padding: 4em 2em;
 }
 
 h2 {
-	background: rgb(86 158 181);
-	margin: 0;
-	text-align: center;
-	color: white;
-	text-transform: uppercase;
-	font-size: 16px;
-	padding: 0.55em 0;
+  background: rgb(86 158 181);
+  margin: 0;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  font-size: 16px;
+  padding: 0.55em 0;
 }
 
 /* styling for projects */
 
 .all-projects {
-	background: rgb(86 158 181);
-	width: calc(1/3 * 100%);
-	margin-right: 3px;
+  background: rgb(86 158 181);
+  width: calc(1 / 3 * 100%);
+  margin-right: 3px;
 }
 
 .project-list {
-	list-style-type: none;
-	padding: 0 3px;
-	margin: 0;
+  list-style-type: none;
+  padding: 0 3px;
+  margin: 0;
 }
 
 .project-list li {
-	border: 1px solid black;
-	padding: 0.5em;
-	margin: 3px 0;
-	overflow: hidden;
-	background: rgb(54 184 226);
-	cursor: pointer;
+  border: 1px solid black;
+  padding: 0.5em;
+  margin: 3px 0;
+  overflow: hidden;
+  background: rgb(54 184 226);
+  cursor: pointer;
 }
 
 .project-list li.active-project {
-	background: rgb(216 216 49 / 70%);
+  background: rgb(216 216 49 / 70%);
+}
+
+.todo-list-show {
+  width: 100%;
+  padding: 0.5em 0.5em 0.5em 1.5em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  margin: 0;
 }
 
 .project-list li:hover,
 .todo-list-show:hover {
-	background: rgb(216 216 49 / 70%);
+  background: rgb(216 216 49 / 70%);
 }
 
 /* styling for to-dos list */
 
 .todo-list-container {
-	border: 1px solid black;
-	/* background: rgb(54 184 226); */
-	margin: 3px 0;
-	position: relative;
+  border: 1px solid black;
+
+  /* background: rgb(54 184 226); */
+  margin: 3px 0;
+  position: relative;
 }
 
 .to-do-list {
-	background: rgb(86 158 181);
-	width: calc(1/3 * 100%);
-	padding: 0 3px;
-	margin-right: 3px;
-}
-
-.todo-list-show {
-	width: 100%;
-	padding: 0.5em 0.5em 0.5em 1.5em;
-	overflow: hidden;
-	white-space: nowrap;
-	cursor: pointer;
-	margin: 0;
+  background: rgb(86 158 181);
+  width: calc(1 / 3 * 100%);
+  padding: 0 3px;
+  margin-right: 3px;
 }
 
 .todo-list-checkbox {
-	position: absolute;
-	top: 13px;
-	left: 3px;
+  position: absolute;
+  top: 13px;
+  left: 3px;
 }
 
 /* styling for to-do details */
 
 .todo-desc {
-	background: rgb(86 158 181);
-	width: calc(1/3 * 100%);
-	padding: 0 3px;
+  background: rgb(86 158 181);
+  width: calc(1 / 3 * 100%);
+  padding: 0 3px;
 }
 
 .desc > div {
-	border: 1px solid black;
-	padding: 0.5em;
-	margin: 3px 0;
-	background: rgb(54 184 226);
-	overflow: hidden;
-	white-space: wrap;
+  border: 1px solid black;
+  padding: 0.5em;
+  margin: 3px 0;
+  background: rgb(54 184 226);
+  overflow: hidden;
+  white-space: pre-wrap;
 }
