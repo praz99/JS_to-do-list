@@ -37,6 +37,11 @@ todosContainer.addEventListener('click', e => {
      selectedToDo.complete = e.target.checked;
     save();
 	}
+  if (e.target.tagName.toLowerCase() === 'button') {
+   const selectedProject = projects.find(list => list.id === selectedProjectId)
+     const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id)
+     editToDoForm(selectedToDo);
+  }
 	if (e.target.tagName.toLowerCase() === 'ul') {
 	 const selectedProject = projects.find(list => list.id === selectedProjectId)
      const selectedToDo = selectedProject.todos.find(todo => todo.id === e.target.id)
@@ -91,7 +96,20 @@ newTodoForm.addEventListener('submit', e => {
   newTodoForm.reset();
 });
 
+function editToDoForm(todo){
 
+  newTodoForm.addEventListener('submit', e => {
+  e.preventDefault();
+  if (todo.name) todo.name = newTodoInputTitle.value;
+  if (todo.desc) todo.desc = newTodoInputDesc.value;
+  if (todo.prior) todo.prior = newTodoInputPrior.value;
+  if (todo.date) todo.date = newTodoInputDate.value;
+  if (todo.time) todo.time = newTodoInputTime.value;
+  if (todo.note) todo.note = newTodoInputNote.value;
+  saveAndRender();
+  newTodoForm.reset();
+});
+}
 
 function createProject(name) {
   return {
@@ -136,6 +154,7 @@ function render() {
     projectDisplayContainer.style.display = '';
     projectTitleElement.innerText = selectedProject.name;
     clearElement(todosContainer);
+    clearElement(todoDescription);
     renderTodos(selectedProject);
   }
 }
@@ -146,10 +165,13 @@ function renderTodos(selectedProject) {
     const checkbox = todoElement.querySelector('input');
     checkbox.id = todo.id;
     checkbox.checked = todo.complete;
+    const editButton = todoElement.querySelector('button');
+    editButton.id = todo.id;
     const label = todoElement.querySelector('ul');
     label.id = todo.id;
     label.append(todo.name);
-    todosContainer.appendChild(todoElement);
+    if(todo.name !== '')
+      todosContainer.appendChild(todoElement);
   })
 }
 
