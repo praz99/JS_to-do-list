@@ -1,6 +1,7 @@
 import './css/style.css';
 
-import { createProject, createTodo } from './logic/factory'
+import { createProject, createTodo } from './logic/factory';
+import {domController} from './dom/domcontroller';
 
 const projectsContainer = document.querySelector('[data-projects]');
 const newProjectForm = document.querySelector('[data-new-project-form]');
@@ -31,12 +32,6 @@ const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'todos.selectedProjectId';
 let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_KEY)) || [];
 let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY);
 
-function clearElement(element) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-}
-
 function renderProjects() {
   projects.forEach(project => {
     const projectElement = document.createElement('li');
@@ -54,32 +49,8 @@ function save() {
   localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY, selectedProjectId);
 }
 
-function renderTodos(selectedProject) {
-  selectedProject.todos.forEach(todo => {
-    const todoElement = document.importNode(todoTemplate.content, true);
-    const checkbox = todoElement.querySelector('input');
-    const todoListContainer = todoElement.getElementById('todo-list-container');
-    if (todo.prior.toLowerCase() === 'low') {
-      todoListContainer.style.backgroundColor = '#6ed46e';
-    } else if (todo.prior.toLowerCase() === 'medium') {
-      todoListContainer.style.backgroundColor = '#c3825d';
-    } else {
-      todoListContainer.style.backgroundColor = '#d45c5c';
-    }
-    checkbox.id = todo.id;
-    checkbox.checked = todo.complete;
-    const editButton = todoElement.querySelector('button');
-    editButton.id = todo.id;
-    const label = todoElement.querySelector('ul');
-    label.id = todo.id;
-    label.append(todo.name);
-    if (todo.name !== '') todosContainer.appendChild(todoElement);
-  });
-}
-
-
 function render() {
-  clearElement(projectsContainer);
+  domController.clearElement(projectsContainer);
   renderProjects();
 
   const selectedProject = projects.find(project => project.id === selectedProjectId);
@@ -89,9 +60,9 @@ function render() {
   } else {
     projectDisplayContainer.style.display = '';
     projectTitleElement.innerText = selectedProject.name;
-    clearElement(todosContainer);
-    clearElement(todoDescription);
-    renderTodos(selectedProject);
+    domController.clearElement(todosContainer);
+    domController.clearElement(todoDescription);
+    domController.renderTodos(selectedProject);
   }
 }
 
@@ -100,35 +71,6 @@ function saveAndRender() {
   render();
 }
 
-function renderTodosDesc(selectedToDo) {
-  clearElement(todoDescription);
-
-  const todoDescTitle = document.createElement('div');
-  todoDescTitle.innerText = `Title: ${selectedToDo.name}`;
-  todoDescription.appendChild(todoDescTitle);
-
-  const todoDescDescription = document.createElement('div');
-  todoDescDescription.innerText = `Description: ${selectedToDo.desc}`;
-  todoDescription.appendChild(todoDescDescription);
-
-  const todoDescPriority = document.createElement('div');
-  todoDescPriority.innerText = `Priority: ${selectedToDo.prior}`;
-  todoDescription.appendChild(todoDescPriority);
-
-  const todoDescDate = document.createElement('div');
-  todoDescDate.innerText = `Date: ${selectedToDo.date}`;
-  todoDescription.appendChild(todoDescDate);
-
-  const todoDescTime = document.createElement('div');
-  todoDescTime.innerText = `Time: ${selectedToDo.time}`;
-  todoDescription.appendChild(todoDescTime);
-
-  const todoDescNote = document.createElement('div');
-  todoDescNote.innerText = `Note: ${selectedToDo.note}`;
-  todoDescription.appendChild(todoDescNote);
-
-  todoDescriptionContainer.appendChild(todoDescription);
-}
 
 function editToDoForm(todo) {
   newTodoForm.addEventListener('submit', e => {
@@ -155,7 +97,7 @@ todosContainer.addEventListener('click', e => {
     editToDoForm(selectedToDo);
   }
   if (e.target.tagName.toLowerCase() === 'ul') {
-    renderTodosDesc(selectedToDo);
+    domController.renderTodosDesc(selectedToDo);
   }
 });
 
