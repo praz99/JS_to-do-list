@@ -1,5 +1,7 @@
 import './css/style.css';
 
+import { createProject, createTodo } from './logic/factory'
+
 const projectsContainer = document.querySelector('[data-projects]');
 const newProjectForm = document.querySelector('[data-new-project-form]');
 const newProjectInput = document.querySelector('[data-new-project-input]');
@@ -140,27 +142,6 @@ function editToDoForm(todo) {
     saveAndRender();
     newTodoForm.reset();
   });
-}
-
-function createProject(name) {
-  return {
-    id: Date.now().toString(),
-    name,
-    todos: [],
-  };
-}
-
-function createTodo(name, desc, prior, date, time, note) {
-  return {
-    id: Date.now().toString(),
-    name,
-    desc,
-    prior,
-    date,
-    time,
-    note,
-    complete: false,
-  };
 }
 
 todosContainer.addEventListener('click', e => {
