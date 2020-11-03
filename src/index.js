@@ -127,6 +127,7 @@ newProjectForm.addEventListener('submit', e => {
   const project = createProject(projectName);
   newProjectInput.value = null;
   projects.push(project);
+  $('#projectModalCenter').modal('toggle');
   saveAndRender();
 });
 
@@ -144,6 +145,7 @@ newTodoForm.addEventListener('submit', e => {
   newTodoInputTitle.value = null;
   const selectedProject = projects.find(project => project.id === selectedProjectId);
   selectedProject.todos.push(todo);
+  $('#ToDoModalCenter').modal('toggle');
   saveAndRender();
   newTodoForm.reset();
 });
