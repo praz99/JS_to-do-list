@@ -48,7 +48,7 @@
 					<form id="project-form" data-new-project-form>
 						<div class="form-group">
 							<label for="inputProjectTItle">Title</label>
-							<input type="text" class="form-control" id="inputProjectTitle" aria-describedby="emailHelp" placeholder="Enter the title of your project" data-new-project-input>
+							<input type="text" class="form-control" id="inputProjectTitle" aria-describedby="emailHelp" placeholder="Enter the title of your project" data-new-project-input required>
 						</div>
 						<button type="submit" class="btn btn-primary" id="btn-project-submit" >Submit</button>
 				</form>
@@ -73,11 +73,11 @@
 					<form id="toDo-form" data-new-todo-form>
 						<div class="form-group">
 							<label for="inputToDoTitle">Title</label>
-							<input type="text" class="form-control" id="inputToDoTitle" placeholder="Enter title..." data-new-todo-title-input>
+							<input type="text" class="form-control" id="inputToDoTitle" placeholder="Enter title..." data-new-todo-title-input required>
 						</div>
 						<div class="form-group">
 							<label for="inputToDoDesc">Description</label>
-							<input type="text" class="form-control" id="inputToDoDesc" placeholder="Enter description..."data-new-todo-desc-input>
+							<input type="text" class="form-control" id="inputToDoDesc" placeholder="Enter description..."data-new-todo-desc-input required>
 						</div>
 						<div class="form-group">
 							<label for="inputToDoPrior">Priority</label>
@@ -90,14 +90,14 @@
 						<div class="form-group">
 							<label for="datetime">Due Date</label>
 							<div id="datetime" class="form-control">
-							<input type="date"  name="date" id="inputToDODate" data-new-todo-date-input>
-							<input type="time" name="time" id="inputToDOTime" data-new-todo-time-input>	
+							<input type="date"  name="date" id="inputToDODate" data-new-todo-date-input required>
+							<input type="time" name="time" id="inputToDOTime" data-new-todo-time-input required>	
 							</div>
 							
 						</div>
 						<div class="form-group">
 							<label for="inputToDONote">Notes</label>
-							<textarea class="form-control" id="inputToDONote" rows="3"data-new-todo-note-input></textarea>
+							<textarea class="form-control" id="inputToDONote" rows="3"data-new-todo-note-input required></textarea>
 						</div>
 						<button type="submit" class="btn btn-primary" id="btn-todo-submit">Submit</button>
 					</form>
