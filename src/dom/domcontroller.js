@@ -1,4 +1,4 @@
-import intervalToDuration from 'date-fns/intervalToDuration'
+import intervalToDuration from 'date-fns/intervalToDuration';
 
 const domController = (() => {
   const todoDescriptionContainer = document.querySelector('[data-todo-desc]');
@@ -19,11 +19,11 @@ const domController = (() => {
       const checkbox = todoElement.querySelector('input');
       const todoListContainer = todoElement.getElementById('todo-list-container');
       if (todo.prior.toLowerCase() === 'low') {
-        todoListContainer.style.backgroundColor = '#6ed46e';
+        todoListContainer.classList.add('prior-low');
       } else if (todo.prior.toLowerCase() === 'medium') {
-        todoListContainer.style.backgroundColor = '#c3825d';
+        todoListContainer.classList.add('prior-medium');
       } else {
-        todoListContainer.style.backgroundColor = '#d45c5c';
+        todoListContainer.classList.add('prior-high');
       }
       checkbox.id = todo.id;
       checkbox.checked = todo.complete;
@@ -35,7 +35,7 @@ const domController = (() => {
       const dueDate = document.createElement('span');
       dueDate.innerText = `Due: ${intervalToDuration({
         start: new Date(Date.now()),
-        end: new Date(todo.date)
+        end: new Date(todo.date),
       }).days} Days`;
       label.appendChild(dueDate);
       if (todo.name !== '') todosContainer.appendChild(todoElement);

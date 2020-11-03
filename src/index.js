@@ -11,7 +11,7 @@ const newProjectInput = document.querySelector('[data-new-project-input]');
 const deleteProjectButton = document.querySelector('[data-delete-project-button]');
 const deleteToDoButton = document.querySelector('[data-delete-todo-button]');
 
-const projectDisplayContainer = document.querySelector('[data-project-dsplay-container]');
+const displayProjectTodos = document.querySelector('[data-project-dsplay-container]');
 const projectTitleElement = document.querySelector('[data-project-title]');
 const todosContainer = document.querySelector('[data-todos]');
 const todoheader = document.getElementById('ToDoHeader');
@@ -26,17 +26,17 @@ const newTodoInputNote = document.querySelector('[data-new-todo-note-input]');
 
 const todoDescription = document.querySelector('[data-desc]');
 
-const LOCAL_STORAGE_PROJECT_KEY = 'todos.projects';
-const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'todos.selectedProjectId';
+const LOCAL_STORAGE_ALL_PROJECTS = 'todos.projects';
+const LOCAL_STORAGE_SELECTED_PROJECT = 'todos.selectedProjectId';
 
-let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_KEY)) || [
+let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_PROJECTS)) || [
   {
     id: Date.now().toString(),
     name: 'Default Project',
     todos: [],
-  }
+  },
 ];
-let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY);
+let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT);
 
 function renderProjects() {
   projects.forEach(project => {
@@ -51,20 +51,20 @@ function renderProjects() {
 }
 
 function save() {
-  localStorage.setItem(LOCAL_STORAGE_PROJECT_KEY, JSON.stringify(projects));
-  localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY, selectedProjectId);
+  localStorage.setItem(LOCAL_STORAGE_ALL_PROJECTS, JSON.stringify(projects));
+  localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT, selectedProjectId);
 }
 
-function render() {
+function display() {
   domController.clearElement(projectsContainer);
   renderProjects();
 
   const selectedProject = projects.find(project => project.id === selectedProjectId);
 
   if (selectedProjectId == null) {
-    projectDisplayContainer.style.display = 'none';
+    displayProjectTodos.style.display = 'none';
   } else {
-    projectDisplayContainer.style.display = '';
+    displayProjectTodos.style.display = '';
     projectTitleElement.innerText = selectedProject.name;
     domController.clearElement(todosContainer);
     domController.clearElement(todoDescription);
@@ -72,9 +72,9 @@ function render() {
   }
 }
 
-function saveAndRender() {
+function saveAndDisplay() {
   save();
-  render();
+  display();
 }
 
 
@@ -87,7 +87,7 @@ function editToDoForm(todo) {
     if (todo.date) todo.date = newTodoInputDate.value;
     if (todo.time) todo.time = newTodoInputTime.value;
     if (todo.note) todo.note = newTodoInputNote.value;
-    saveAndRender();
+    saveAndDisplay();
     newTodoForm.reset();
   });
 }
@@ -111,21 +111,21 @@ deleteToDoButton.addEventListener('click', () => {
   const selectedProject = projects.find(list => list.id === selectedProjectId);
   selectedProject.todos = selectedProject.todos.filter(todo => !todo.complete);
   todoheader.innerText = 'Details';
-  saveAndRender();
+  saveAndDisplay();
 });
 
 projectsContainer.addEventListener('click', e => {
   if (e.target.tagName.toLowerCase() === 'li') {
     selectedProjectId = e.target.dataset.projectId;
     todoheader.innerText = 'Details';
-    saveAndRender();
+    saveAndDisplay();
   }
 });
 
 deleteProjectButton.addEventListener('click', () => {
   projects = projects.filter(project => project.id !== selectedProjectId);
   selectedProjectId = null;
-  saveAndRender();
+  saveAndDisplay();
 });
 
 newProjectForm.addEventListener('submit', e => {
@@ -136,7 +136,7 @@ newProjectForm.addEventListener('submit', e => {
   newProjectInput.value = null;
   projects.push(project);
   $('#projectModalCenter').modal('toggle');
-  saveAndRender();
+  saveAndDisplay();
 });
 
 newTodoForm.addEventListener('submit', e => {
@@ -154,8 +154,8 @@ newTodoForm.addEventListener('submit', e => {
   const selectedProject = projects.find(project => project.id === selectedProjectId);
   selectedProject.todos.push(todo);
   $('#ToDoModalCenter').modal('toggle');
-  saveAndRender();
+  saveAndDisplay();
   newTodoForm.reset();
 });
 
-render();
+display();

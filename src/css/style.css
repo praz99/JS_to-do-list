@@ -115,3 +115,15 @@ h2 {
   font-weight: 600;
   color: #0a0300;
 }
+
+.prior-low {
+  background-color: #6ed46e;
+}
+
+.prior-medium {
+  background-color: #c3825d;
+}
+
+.prior-high {
+  background-color: #d45c5c;
+}
