@@ -1,7 +1,9 @@
 import './css/style.css';
 
 import { createProject, createTodo } from './logic/factory';
-import {domController} from './dom/domcontroller';
+import domController from './dom/domcontroller';
+
+/* globals $:false */
 
 const projectsContainer = document.querySelector('[data-projects]');
 const newProjectForm = document.querySelector('[data-new-project-form]');
@@ -12,8 +14,7 @@ const deleteToDoButton = document.querySelector('[data-delete-todo-button]');
 const projectDisplayContainer = document.querySelector('[data-project-dsplay-container]');
 const projectTitleElement = document.querySelector('[data-project-title]');
 const todosContainer = document.querySelector('[data-todos]');
-
-const todoTemplate = document.getElementById('todo-template');
+const todoheader = document.getElementById('ToDoHeader');
 
 const newTodoForm = document.querySelector('[data-new-todo-form]');
 const newTodoInputTitle = document.querySelector('[data-new-todo-title-input]');
@@ -23,7 +24,6 @@ const newTodoInputDate = document.querySelector('[data-new-todo-date-input]');
 const newTodoInputTime = document.querySelector('[data-new-todo-time-input]');
 const newTodoInputNote = document.querySelector('[data-new-todo-note-input]');
 
-const todoDescriptionContainer = document.querySelector('[data-todo-desc]');
 const todoDescription = document.querySelector('[data-desc]');
 
 const LOCAL_STORAGE_PROJECT_KEY = 'todos.projects';
@@ -104,12 +104,14 @@ todosContainer.addEventListener('click', e => {
 deleteToDoButton.addEventListener('click', () => {
   const selectedProject = projects.find(list => list.id === selectedProjectId);
   selectedProject.todos = selectedProject.todos.filter(todo => !todo.complete);
+  todoheader.innerText = 'Details';
   saveAndRender();
 });
 
 projectsContainer.addEventListener('click', e => {
   if (e.target.tagName.toLowerCase() === 'li') {
     selectedProjectId = e.target.dataset.projectId;
+    todoheader.innerText = 'Details';
     saveAndRender();
   }
 });

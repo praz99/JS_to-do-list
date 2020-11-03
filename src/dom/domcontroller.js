@@ -1,74 +1,97 @@
 const domController = (() => {
-
   const todoDescriptionContainer = document.querySelector('[data-todo-desc]');
-const todoDescription = document.querySelector('[data-desc]');
-const projectDisplayContainer = document.querySelector('[data-project-dsplay-container]');
-const todosContainer = document.querySelector('[data-todos]');
-const projectsContainer = document.querySelector('[data-projects]');
-const todoTemplate = document.getElementById('todo-template');
+  const todoDescription = document.querySelector('[data-desc]');
+  const todosContainer = document.querySelector('[data-todos]');
+  const todoTemplate = document.getElementById('todo-template');
 
 
   function clearElement(element) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
   }
-}
 
   function renderTodos(selectedProject) {
-  selectedProject.todos.forEach(todo => {
-    const todoElement = document.importNode(todoTemplate.content, true);
-    const checkbox = todoElement.querySelector('input');
-    const todoListContainer = todoElement.getElementById('todo-list-container');
-    if (todo.prior.toLowerCase() === 'low') {
-      todoListContainer.style.backgroundColor = '#6ed46e';
-    } else if (todo.prior.toLowerCase() === 'medium') {
-      todoListContainer.style.backgroundColor = '#c3825d';
-    } else {
-      todoListContainer.style.backgroundColor = '#d45c5c';
-    }
-    checkbox.id = todo.id;
-    checkbox.checked = todo.complete;
-    const editButton = todoElement.querySelector('button');
-    editButton.id = todo.id;
-    const label = todoElement.querySelector('ul');
-    label.id = todo.id;
-    label.append(todo.name);
-    if (todo.name !== '') todosContainer.appendChild(todoElement);
-  });
-}
+    selectedProject.todos.forEach(todo => {
+      const todoElement = document.importNode(todoTemplate.content, true);
+      const checkbox = todoElement.querySelector('input');
+      const todoListContainer = todoElement.getElementById('todo-list-container');
+      if (todo.prior.toLowerCase() === 'low') {
+        todoListContainer.style.backgroundColor = '#6ed46e';
+      } else if (todo.prior.toLowerCase() === 'medium') {
+        todoListContainer.style.backgroundColor = '#c3825d';
+      } else {
+        todoListContainer.style.backgroundColor = '#d45c5c';
+      }
+      checkbox.id = todo.id;
+      checkbox.checked = todo.complete;
+      const editButton = todoElement.querySelector('button');
+      editButton.id = todo.id;
+      const label = todoElement.querySelector('ul');
+      label.id = todo.id;
+      label.append(todo.name);
+      if (todo.name !== '') todosContainer.appendChild(todoElement);
+    });
+  }
 
   function renderTodosDesc(selectedToDo) {
-  clearElement(todoDescription);
+    clearElement(todoDescription);
+    const todoheader = document.getElementById('ToDoHeader');
+    todoheader.innerText = `${selectedToDo.name} Details`;
 
-  const todoDescTitle = document.createElement('div');
-  todoDescTitle.innerText = `Title: ${selectedToDo.name}`;
-  todoDescription.appendChild(todoDescTitle);
+    const todoDescTitle = document.createElement('div');
+    const todoTitSpan = document.createElement('span');
+    todoDescTitle.innerText = 'Title: ';
+    todoTitSpan.innerText = `${selectedToDo.name}`;
+    todoDescTitle.appendChild(todoTitSpan);
+    todoTitSpan.classList.add('todoText');
+    todoDescription.appendChild(todoDescTitle);
 
-  const todoDescDescription = document.createElement('div');
-  todoDescDescription.innerText = `Description: ${selectedToDo.desc}`;
-  todoDescription.appendChild(todoDescDescription);
+    const todoDescDescription = document.createElement('div');
+    const todoDescSpan = document.createElement('span');
+    todoDescDescription.innerText = 'Description: ';
+    todoDescSpan.innerText = `${selectedToDo.desc}`;
+    todoDescDescription.appendChild(todoDescSpan);
+    todoDescSpan.classList.add('todoText');
+    todoDescription.appendChild(todoDescDescription);
 
-  const todoDescPriority = document.createElement('div');
-  todoDescPriority.innerText = `Priority: ${selectedToDo.prior}`;
-  todoDescription.appendChild(todoDescPriority);
+    const todoDescPriority = document.createElement('div');
+    const todopriSpan = document.createElement('span');
+    todoDescPriority.innerText = 'Priority: ';
+    todopriSpan.innerText = `${selectedToDo.prior}`;
+    todoDescPriority.appendChild(todopriSpan);
+    todopriSpan.classList.add('todoText');
+    todoDescription.appendChild(todoDescPriority);
 
-  const todoDescDate = document.createElement('div');
-  todoDescDate.innerText = `Date: ${selectedToDo.date}`;
-  todoDescription.appendChild(todoDescDate);
+    const todoDescDate = document.createElement('div');
+    const todoDateSpan = document.createElement('span');
+    todoDescDate.innerText = 'Date: ';
+    todoDateSpan.innerText = `${selectedToDo.date}`;
+    todoDescDate.appendChild(todoDateSpan);
+    todoDateSpan.classList.add('todoText');
+    todoDescription.appendChild(todoDescDate);
 
-  const todoDescTime = document.createElement('div');
-  todoDescTime.innerText = `Time: ${selectedToDo.time}`;
-  todoDescription.appendChild(todoDescTime);
+    const todoDescTime = document.createElement('div');
+    const todoTimeSpan = document.createElement('span');
+    todoDescTime.innerText = 'Time: ';
 
-  const todoDescNote = document.createElement('div');
-  todoDescNote.innerText = `Note: ${selectedToDo.note}`;
-  todoDescription.appendChild(todoDescNote);
+    todoTimeSpan.innerText = `${selectedToDo.time}`;
+    todoDescTime.appendChild(todoTimeSpan);
+    todoTimeSpan.classList.add('todoText');
+    todoDescription.appendChild(todoDescTime);
 
-  todoDescriptionContainer.appendChild(todoDescription);
-}
+    const todoDescNote = document.createElement('div');
+    const todoNoteSpan = document.createElement('span');
+    todoDescNote.innerText = 'Note: ';
+    todoNoteSpan.innerText = `${selectedToDo.note}`;
+    todoDescNote.appendChild(todoNoteSpan);
+    todoNoteSpan.classList.add('todoText');
+    todoDescription.appendChild(todoDescNote);
 
-return { renderTodosDesc, renderTodos, clearElement};
+    todoDescriptionContainer.appendChild(todoDescription);
+  }
 
+  return { renderTodosDesc, renderTodos, clearElement };
 })();
 
-export {domController};
+export default domController;
