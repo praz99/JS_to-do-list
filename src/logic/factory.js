@@ -1,4 +1,4 @@
-function createProject(name) {
+const createProject = (name) => {
   return {
     id: Date.now().toString(),
     name,
@@ -6,7 +6,7 @@ function createProject(name) {
   };
 }
 
-function createTodo(name, desc, prior, date, time, note) {
+const createTodo = (name, desc, prior, date, time, note) => {
   return {
     id: Date.now().toString(),
     name,

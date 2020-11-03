@@ -6,14 +6,13 @@ const domController = (() => {
   const todosContainer = document.querySelector('[data-todos]');
   const todoTemplate = document.getElementById('todo-template');
 
-
-  function clearElement(element) {
+  const clearElement = (element) => {
     while (element.firstChild) {
       element.removeChild(element.firstChild);
     }
   }
 
-  function renderTodos(selectedProject) {
+  const renderTodos = (selectedProject) => {
     selectedProject.todos.forEach(todo => {
       const todoElement = document.importNode(todoTemplate.content, true);
       const checkbox = todoElement.querySelector('input');
@@ -42,7 +41,7 @@ const domController = (() => {
     });
   }
 
-  function renderTodosDesc(selectedToDo) {
+  const renderTodosDesc = (selectedToDo) => {
     clearElement(todoDescription);
     const todoheader = document.getElementById('ToDoHeader');
     todoheader.innerText = selectedToDo.name;

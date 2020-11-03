@@ -38,7 +38,7 @@ let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_PROJECTS)) || [
 ];
 let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT);
 
-function renderProjects() {
+const renderProjects = () => {
   projects.forEach(project => {
     const projectElement = document.createElement('li');
     projectElement.dataset.projectId = project.id;
@@ -50,12 +50,12 @@ function renderProjects() {
   });
 }
 
-function save() {
+const save = () => {
   localStorage.setItem(LOCAL_STORAGE_ALL_PROJECTS, JSON.stringify(projects));
   localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT, selectedProjectId);
 }
 
-function display() {
+const display = () => {
   domController.clearElement(projectsContainer);
   renderProjects();
 
@@ -71,14 +71,12 @@ function display() {
     domController.renderTodos(selectedProject);
   }
 }
-
-function saveAndDisplay() {
+const saveAndDisplay = () => {
   save();
   display();
 }
 
-
-function editToDoForm(todo) {
+const editToDoForm = (todo) => {
   newTodoForm.addEventListener('submit', e => {
     e.preventDefault();
     if (todo.name) todo.name = newTodoInputTitle.value;
