@@ -45,15 +45,7 @@ const domController = (() => {
   function renderTodosDesc(selectedToDo) {
     clearElement(todoDescription);
     const todoheader = document.getElementById('ToDoHeader');
-    todoheader.innerText = `${selectedToDo.name} Details`;
-
-    const todoDescTitle = document.createElement('div');
-    const todoTitSpan = document.createElement('span');
-    todoDescTitle.innerText = 'Title: ';
-    todoTitSpan.innerText = `${selectedToDo.name}`;
-    todoDescTitle.appendChild(todoTitSpan);
-    todoTitSpan.classList.add('todoText');
-    todoDescription.appendChild(todoDescTitle);
+    todoheader.innerText = selectedToDo.name;
 
     const todoDescDescription = document.createElement('div');
     const todoDescSpan = document.createElement('span');
