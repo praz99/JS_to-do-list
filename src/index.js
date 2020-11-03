@@ -48,12 +48,12 @@ const renderProjects = () => {
     }
     projectsContainer.appendChild(projectElement);
   });
-}
+};
 
 const save = () => {
   localStorage.setItem(LOCAL_STORAGE_ALL_PROJECTS, JSON.stringify(projects));
   localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT, selectedProjectId);
-}
+};
 
 const display = () => {
   domController.clearElement(projectsContainer);
@@ -70,11 +70,11 @@ const display = () => {
     domController.clearElement(todoDescription);
     domController.renderTodos(selectedProject);
   }
-}
+};
 const saveAndDisplay = () => {
   save();
   display();
-}
+};
 
 const editToDoForm = (todo) => {
   newTodoForm.addEventListener('submit', e => {
@@ -88,7 +88,7 @@ const editToDoForm = (todo) => {
     saveAndDisplay();
     newTodoForm.reset();
   });
-}
+};
 
 todosContainer.addEventListener('click', e => {
   const selectedProject = projects.find(list => list.id === selectedProjectId);

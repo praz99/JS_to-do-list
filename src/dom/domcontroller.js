@@ -10,7 +10,7 @@ const domController = (() => {
     while (element.firstChild) {
       element.removeChild(element.firstChild);
     }
-  }
+  };
 
   const renderTodos = (selectedProject) => {
     selectedProject.todos.forEach(todo => {
@@ -39,7 +39,7 @@ const domController = (() => {
       label.appendChild(dueDate);
       if (todo.name !== '') todosContainer.appendChild(todoElement);
     });
-  }
+  };
 
   const renderTodosDesc = (selectedToDo) => {
     clearElement(todoDescription);
@@ -88,7 +88,7 @@ const domController = (() => {
     todoDescription.appendChild(todoDescNote);
 
     todoDescriptionContainer.appendChild(todoDescription);
-  }
+  };
 
   return { renderTodosDesc, renderTodos, clearElement };
 })();
