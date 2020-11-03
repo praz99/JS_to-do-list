@@ -29,7 +29,13 @@ const todoDescription = document.querySelector('[data-desc]');
 const LOCAL_STORAGE_PROJECT_KEY = 'todos.projects';
 const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'todos.selectedProjectId';
 
-let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_KEY)) || [];
+let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_KEY)) || [
+  {
+    id: Date.now().toString(),
+    name: 'Default Project',
+    todos: [],
+  }
+];
 let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY);
 
 function renderProjects() {
