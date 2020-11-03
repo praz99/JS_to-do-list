@@ -57,6 +57,13 @@ h2 {
   margin: 0;
 }
 
+.todo-list-show span {
+  font-style: italic;
+  font-size: 12px;
+  padding: 5px;
+  float: right;
+}
+
 .project-list li:hover,
 .todo-list-show:hover {
   background: rgb(216 216 49 / 70%);

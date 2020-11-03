@@ -1,3 +1,5 @@
+import intervalToDuration from 'date-fns/intervalToDuration'
+
 const domController = (() => {
   const todoDescriptionContainer = document.querySelector('[data-todo-desc]');
   const todoDescription = document.querySelector('[data-desc]');
@@ -30,6 +32,12 @@ const domController = (() => {
       const label = todoElement.querySelector('ul');
       label.id = todo.id;
       label.append(todo.name);
+      const dueDate = document.createElement('span');
+      dueDate.innerText = `Due: ${intervalToDuration({
+        start: new Date(Date.now()),
+        end: new Date(todo.date)
+      }).days} Days`;
+      label.appendChild(dueDate);
       if (todo.name !== '') todosContainer.appendChild(todoElement);
     });
   }
