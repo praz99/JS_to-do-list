@@ -60,6 +60,16 @@ $ npm run start
 
 ~~~
 
+## Testing
+
+This project has been tested using [Jest](https://jestjs.io/en/) Framework.  
+To start testing, enter the following command
+
+~~~bash
+
+$ npm test
+
+~~~
 
 ## ✒️  Authors <a name = "author"></a>
 
